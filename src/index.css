@@ -5,9 +5,98 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(253, 253, 253);
+  text-align: center;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+h1 {
+  text-align: center;
+  display: block;
+}
+
+/*General Main*/
+.App {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.App > * {
+  margin: 10px 0;
+}
+
+/*Question*/
+#question {
+  margin: 10px 0;
+  text-align: center;
+  max-width: 400px;
+}
+
+#submit, #nextQ{
+  width: 100px;
+  display: block;
+  padding: 5px 10px;
+}
+
+#show-ans {
+  display: none;
+}
+
+#show-hint {
+  display: none;
+}
+
+/*Hint Component*/
+#hint-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/*Right*/
+#numbered-right {
+  position: absolute;
+  margin: 10px 10px 0 0;
+  top: 0;
+  right: 0;
+  font-size: 1.5em;
+}
+
+#numbered-right strong {
+  color: rgb(1, 214, 1)
+}
+
+/*Heading Title*/
+#heading {
+  font-size: 3em;
+  position: absolute;
+  top: 10%;
+}
+
+/*Lives Left*/
+#lives-left {
+  position: absolute;
+  margin: 10px 0 0 10px;
+  font-size: 1.5em;
+  top: 0;
+  left: 0;
+}
+
+#lives-left strong {
+  color: rgb(168, 5, 5);
+}
+
+/*Next Question*/
+#nextQ {
+  display: none;
+}
+
