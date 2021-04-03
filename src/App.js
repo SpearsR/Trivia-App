@@ -14,14 +14,14 @@ class App extends React.Component {
       questionId : 0,
       nextQ : false,
       numberedRight : 0,
-      lives : 10
+      lives : 3
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.checkAnswer = this.checkAnswer.bind(this);
     this.fetchAPI = this.fetchAPI.bind(this);
-    this.showHint = this.showHint.bind(this);
     this.handleNextQ = this.handleNextQ.bind(this);
+    this.handleLost = this.handleLost.bind(this);
   }
 
   
@@ -64,9 +64,6 @@ class App extends React.Component {
     this.setState({input: event.target.value});
   }
   
-  showHint(){
-    
-  }
   
   checkAnswer(){
     document.getElementById('show-hint').style.display = 'none';
@@ -91,9 +88,19 @@ class App extends React.Component {
     this.setState({input : ''});
   }
   
+  handleLost(){
+    document.getElementById('blurred').style.display = 'flex';
+  }
+  
   componentDidMount(){
     this.fetchAPI();
-    document.getElementById('show-ans').style.display = 'none';
+    document.getElementById('show-ans').style.display = 'none'; 
+  }
+  
+  componentDidUpdate(){
+    if(this.state.lives <= 0){
+      this.handleLost();
+    }
   }
   
   handleNextQ(){
@@ -104,14 +111,24 @@ class App extends React.Component {
   render(){
     return (
       <div className="App">
+        <div id='blurred'>
+          <div id="lost-pop-up">
+            <div className='high-score'>You got <strong>{this.state.numberedRight}</strong> question(s) right!</div>
+            <div onClick={() => {
+               document.getElementById('blurred').style.display = 'none';
+               this.setState({numberedRight: 0, lives: 3});
+               this.handleNextQ();
+            }} className='button'>Restart</div>
+          </div>
+         </div>
         <h1 className="animate__animated animate__fadeInDownBig" id="heading">Random Trivia</h1>
         <Lives lives={this.state.lives}/>
+        <span id='question'>{this.state.question}</span>
         <Hint answer={this.state.answer} />
         <span id="numbered-right"><strong>{this.state.numberedRight}</strong> Right</span>
-        <span id='question'>{this.state.question}</span>
         <input onChange={this.handleChange} value={this.state.input} id="answer-input"></input>   
-        <button onClick={this.checkAnswer} id='submit'>Check Answer</button>
-        <button onClick={this.handleNextQ} id='nextQ'>Next Question</button>
+        <div className='button'  onClick={this.checkAnswer} id='submit'>Check Answer</div>
+        <div className='button' onClick={this.handleNextQ} id='nextQ'>Next Question</div>
         <span id="results"> {this.state.result}</span>
         <span id="show-ans">The correct answer was <br></br> <strong>{this.state.answer}</strong></span>
       </div>
@@ -129,7 +146,7 @@ function Hint(props){
 
   return(
     <div id="hint-box">
-      <button onClick={showHint} id="hint-button">Hint</button>
+      <div className='button'  onClick={showHint} id="hint-button">Hint</div>
       <span id="show-hint">{hint}...</span>
     </div>
   );
