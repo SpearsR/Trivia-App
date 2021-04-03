@@ -26,12 +26,13 @@ class App extends React.Component {
 
   
   fetchAPI(){
-    fetch("http://jservice.io/api/random")
+    fetch("https://opentdb.com/api.php?amount=1")
       .then(res => res.json())
       .then(data => {
 
         //API Has some weird answer inputs so I am cleaning it here
-        let ans = data[0].answer.split(/(<i>|<\/i>)/)
+        data = data.results[0]
+        let ans = data.correct_answer.split(/(<i>|<\/i>)/)
         try{
           if(ans.length === 5){
             ans = ans[2]
@@ -46,7 +47,7 @@ class App extends React.Component {
 
         ans = ans.split(/((|))/).join('');
         this.setState({
-          question : data[0].question,
+          question : data.question,
           answer : ans
         })
         console.log(this.state.answer);
